@@ -61,6 +61,26 @@ jobs:
       - name: Add Android platform
         run: npx cap add android
 
+      - name: Add microphone permission
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          manifest = Path("android/app/src/main/AndroidManifest.xml")
+          content = manifest.read_text()
+          permission = '    <uses-permission android:name="android.permission.RECORD_AUDIO" />'
+
+          if "android.permission.RECORD_AUDIO" not in content:
+              content = content.replace("<manifest", "<manifest", 1)
+              pos = content.find(">")
+              if pos == -1:
+                  raise SystemExit("Could not find the opening manifest tag")
+              content = content[:pos + 1] + "\n" + permission + content[pos + 1:]
+              manifest.write_text(content)
+
+          print("Microphone permission declared.")
+          PY
+
       - name: Sync Android project
         run: npx cap sync android
 
