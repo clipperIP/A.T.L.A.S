@@ -37,6 +37,24 @@ jobs:
           npm install --legacy-peer-deps @capacitor/core@6
           npm install --legacy-peer-deps --save-dev @capacitor/cli@6 @capacitor/android@6
 
+      - name: Configure A.T.L.A.S.
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const file = 'capacitor.config.json';
+          let config = {};
+
+          if (fs.existsSync(file)) {
+            config = JSON.parse(fs.readFileSync(file, 'utf8'));
+          }
+
+          config.appId = 'com.atlas.assistant';
+          config.appName = 'A.T.L.A.S.';
+          if (!config.webDir) config.webDir = 'dist';
+
+          fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');
+          NODE
+
       - name: Build web app
         run: npm run build
 
