@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --core-cyan: #00f0ff;
+    --core-blue: #0284c7;
+    --core-dark: #030712;
+    --hud-glow: 0 0 25px rgba(0, 240, 255, 0.45);
+    --hud-glow-intense: 0 0 45px rgba(0, 240, 255, 0.75), 0 0 15px rgba(255, 255, 255, 0.9);
+  }
+
+  body {
+    background-color: #030712;
+    color: #e2e8f0;
+    font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', monospace, sans-serif;
+}
+
+.font-rajdhani {
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.font-mono-hud {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+/* Hologram Grid Background */
+.hud-grid {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.hud-grid-dense {
+  background-image: 
+    linear-gradient(to right, rgba(0, 240, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.07) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Subtle holographic scanline */
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.7), transparent);
+  animation: scanlineMove 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanlineMove {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Rotating HUD Elements */
+@keyframes spinClockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinCounterClockwise {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes pulseCore {
+  0%, 100% { transform: scale(1); opacity: 0.85; filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.4)); }
+  50% { transform: scale(1.06); opacity: 1; filter: drop-shadow(0 0 35px rgba(0, 240, 255, 0.85)); }
+}
+
+@keyframes pulseListen {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(239, 68, 68, 0.7)); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 50px rgba(239, 68, 68, 0.95)); }
+}
+
+@keyframes pulseSpeak {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(59, 130, 246, 0.7)); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 45px rgba(14, 165, 233, 0.95)); }
+}
+
+.animate-spin-slow {
+  animation: spinClockwise 24s linear infinite;
+}
+
+.animate-spin-reverse-slow {
+  animation: spinCounterClockwise 32s linear infinite;
+}
+
+.animate-spin-fast {
+  animation: spinClockwise 6s linear infinite;
+}
+
+.animate-spin-reverse-fast {
+  animation: spinCounterClockwise 8s linear infinite;
+}
+
+.animate-core-idle {
+  animation: pulseCore 4s ease-in-out infinite;
+}
+
+.animate-core-listen {
+  animation: pulseListen 1.5s ease-in-out infinite;
+}
+
+.animate-core-speak {
+  animation: pulseSpeak 1.8s ease-in-out infinite;
+}
+
+/* Tactical Corner Brackets */
+.corner-bracket-tl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid rgba(0, 240, 255, 0.8);
+  border-left: 2px solid rgba(0, 240, 255, 0.8);
+}
+
+.corner-bracket-tr {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid rgba(0, 240, 255, 0.8);
+  border-right: 2px solid rgba(0, 240, 255, 0.8);
+}
+
+.corner-bracket-bl {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-bottom: 2px solid rgba(0, 240, 255, 0.8);
+  border-left: 2px solid rgba(0, 240, 255, 0.8);
+}
+
+.corner-bracket-br {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  border-bottom: 2px solid rgba(0, 240, 255, 0.8);
+  border-right: 2px solid rgba(0, 240, 255, 0.8);
+}
+
+/* Glowing text and borders */
+.glow-text-cyan {
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.65), 0 0 24px rgba(0, 240, 255, 0.3);
+}
+
+.glow-border-cyan {
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25), inset 0 0 12px rgba(0, 240, 255, 0.1);
+}
+
+/* Custom Tactical Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(3, 7, 18, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.35);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.6);
+}

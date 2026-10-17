@@ -1,0 +1,8 @@
+{
+  "name": "A.T.L.A.S. - Tactical AI Assistant",
+  "description": "Advanced Tactical Logic and Assistance System - Futuristic personal AI assistant with voice intelligence, holographic HUD, and native Android export architecture.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
