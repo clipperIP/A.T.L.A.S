@@ -65,20 +65,32 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import re
 
           manifest = Path("android/app/src/main/AndroidManifest.xml")
           content = manifest.read_text()
+
           permission = '    <uses-permission android:name="android.permission.RECORD_AUDIO" />'
 
-          if "android.permission.RECORD_AUDIO" not in content:
-              content = content.replace("<manifest", "<manifest", 1)
-              pos = content.find(">")
-              if pos == -1:
-                  raise SystemExit("Could not find the opening manifest tag")
-              content = content[:pos + 1] + "\n" + permission + content[pos + 1:]
-              manifest.write_text(content)
+          content = re.sub(
+              r'\s*<uses-permission android:name="android.permission.RECORD_AUDIO"\s*/>',
+              '',
+              content
+          )
 
-          print("Microphone permission declared.")
+          match = re.search(r'<manifest\b[^>]*>', content)
+          if not match:
+              raise SystemExit("ERROR: Manifest opening tag not found")
+
+          content = (
+              content[:match.end()]
+              + "\n"
+              + permission
+              + content[match.end():]
+          )
+
+          manifest.write_text(content)
+          print("Microphone permission inserted correctly.")
           PY
 
       - name: Sync Android project
